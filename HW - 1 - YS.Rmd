@@ -1,0 +1,132 @@
+---
+title: "Importing and Playing with Excel File in R - YS"
+output: html_document
+date: "2023-09-24"
+---
+
+```{r setup, include=FALSE}
+### Setting it up
+
+library(readxl)
+Typical_Employee_Survey_Data <- read_excel("C:/Users/pro10/Downloads/Typical_Employee_Survey_Data.xlsx", col_names = FALSE)
+
+### Playing with original
+View(Typical_Employee_Survey_Data)
+names(Typical_Employee_Survey_Data)
+
+### 1) Add Header Row (10 points)
+TE <- data.frame(Typical_Employee_Survey_Data)
+colnames(TE)
+
+colnames(TE) <- c("Age", "Gender", "Satisfaction", "Jobcharact", "Yearsworked", "Promotion", "Decisions", "Budgetary", "Proud", "Alternative", "Relations")
+
+
+
+### 2) Print out the 5-point summary and boxplot (numerical columns) for each column (20 points)
+
+summary(TE$Age)
+boxplot(TE$Age)
+
+summary(TE$Gender)
+boxplot(TE$Gender)
+
+summary(TE$Satisfaction)
+boxplot(TE$Satisfaction)
+
+summary(TE$Jobcharact)
+boxplot(TE$Jobcharact)
+
+summary(TE$Yearsworked)
+boxplot(TE$Yearsworked)
+
+summary(TE$Promotion)
+boxplot(TE$Promotion)
+
+summary(TE$Decisions)
+boxplot(TE$Decisions)
+
+summary(TE$Budgetary)
+boxplot(TE$Budgetary)
+
+summary(TE$Proud)
+boxplot(TE$Proud)
+
+summary(TE$Alternative)
+boxplot(TE$Alternative)
+
+summary(TE$Relations)
+boxplot(TE$Relations)
+
+
+
+### 3) Convert the columns that need to be converted to Factors (10 points)
+
+factor
+factor(TE$Yearsworked)
+
+lapply(TE$Yearsworked, factor)
+
+str(TE$Yearsworked)
+
+#(what didn't work in this question)
+#TE[TE$Gender == 1] <- "Male"
+#Error in `[<-.data.frame`(`*tmp*`, TE$Gender == 1, value = "Male") : duplicate subscripts for columns
+#TE$Gender <- factor(TE$Gender,levels = c(0,1), labels=c("female","male")
+#TE$Gender <- factor(TE$Gender,levels = c(0,1), labels=c("female","male"))
+#Error: unexpected symbol in: "TE"
+
+#what worked (changed 1 and 0 to male female)
+TE$Gender[TE$Gender == 1] <- "Male"
+TE$Gender[TE$Gender == 2] <- "Female"
+
+#changed do you participate in budgetary decisions 1 yes 2 no 
+TE$Budgetary[TE$Budgetary == 1] <- "I participate in budg. dec."
+TE$Budgetary[TE$Budgetary == 2] <- "I don't participate in budg. dec."
+
+
+
+### 4) Plot the right visual for each column (20 points)
+
+barplot(TE$Age)
+hist(TE$Age) #hist is better
+
+table(TE$Gender)
+barplot(table(TE$Gender))
+
+hist(TE$Satisfaction)
+
+hist(TE$Jobcharact)
+
+hist(TE$Yearsworked)
+plot(TE$Yearsworked)
+
+hist(TE$Promotion)
+boxplot(TE$Promotion)
+
+boxplot(TE$Decisions)
+hist(TE$Decisions)
+
+barplot(table(TE$Budgetary))
+
+hist(TE$Proud)
+boxplot(TE$Proud)
+
+hist(TE$Alternative)
+boxplot(TE$Alternative)
+
+hist(TE$Relations)
+boxplot(TE$Relations)
+
+
+
+### 5) Plot scatter plots to show few relationships (20 points)
+
+scatter.smooth(TE$Age, TE$Yearsworked)
+scatter.smooth(TE$Yearsworked, TE$Alternative)
+scatter.smooth(TE$Yearsworked, TE$Satisfaction)
+
+scatter.smooth(TE$Age, TE$Relations)
+scatter.smooth(TE$Promotion, TE$Satisfaction)
+
+plot(TE$Age, TE$Yearsworked)
+```
